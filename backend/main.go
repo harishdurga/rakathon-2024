@@ -9,6 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -30,7 +31,9 @@ func main() {
 	//init root handler
 	rootHandler := handlers.NewRootHandler(productGetter)
 	e := echo.New()
+	e.Use(middleware.CORS())
 	e.Static("/static", "assets")
 	e.GET("/products", rootHandler.GetProducts)
+	e.GET("/home-page-layout", rootHandler.HomePageLayout)
 	e.Logger.Fatal(e.Start(":1323"))
 }
