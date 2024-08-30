@@ -10,6 +10,11 @@ type ProductFilters struct {
 	Offset     int
 }
 
+type BannerFilters struct {
+	CategoryIDs []int
+	Limit       int
+}
+
 type Product struct {
 	ID             int                    `json:"id"`
 	Name           string                 `json:"name"`
@@ -22,6 +27,17 @@ type Product struct {
 	Keywords       []string               `json:"keywords"`
 }
 
+type Banner struct {
+	ID         int      `json:"id"`
+	CategoryID int      `json:"category_id"`
+	Url        string   `json:"url"`
+	Keywords   []string `json:"keywords"`
+}
+
 type ProductGetter interface {
 	GetProducts(filters ProductFilters) ([]Product, error)
+}
+
+type BannerGetter interface {
+	GetBanners(filters BannerFilters) ([]Banner, error)
 }

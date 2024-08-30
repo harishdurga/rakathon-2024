@@ -28,12 +28,14 @@ func main() {
 	defer db.Close()
 	//init product getter
 	productGetter := repos.NewProductGetterImpl(db)
+	bannerGetter := repos.NewBannerGetterImpl(db)
 	//init root handler
-	rootHandler := handlers.NewRootHandler(productGetter)
+	rootHandler := handlers.NewRootHandler(productGetter, bannerGetter)
 	e := echo.New()
 	e.Use(middleware.CORS())
 	e.Static("/static", "assets")
 	e.GET("/products", rootHandler.GetProducts)
+	e.GET("/banners", rootHandler.GetBanners)
 	e.GET("/home-page-layout", rootHandler.HomePageLayout)
 	e.Logger.Fatal(e.Start(":1323"))
 }

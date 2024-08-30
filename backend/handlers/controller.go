@@ -11,10 +11,11 @@ import (
 
 type RootHandler struct {
 	ProductGetter repos.ProductGetter
+	BannerGetter  repos.BannerGetter
 }
 
-func NewRootHandler(pg repos.ProductGetter) *RootHandler {
-	return &RootHandler{ProductGetter: pg}
+func NewRootHandler(pg repos.ProductGetter, bg repos.BannerGetter) *RootHandler {
+	return &RootHandler{ProductGetter: pg, BannerGetter: bg}
 }
 
 func (rh *RootHandler) GetProducts(c echo.Context) error {
@@ -28,6 +29,15 @@ func (rh *RootHandler) GetProducts(c echo.Context) error {
 
 func (rh *RootHandler) HomePageLayout(c echo.Context) error {
 	return c.String(200, `{"layout":[{"type":"main-banner-slider","filters":{"categories":"2,4"}},{"type":"category-products","filters":{"category_id":2,"limit":5,"sort":"price_asc","keyword":"dhoti","max_price":2000},"display_title":"Clothing that make feel you special"},{"type":"category-products","filters":{"category_id":4,"limit":5,"sort":"price_asc","max_price":2000},"display_title":"Books that you can immerse yourself in"}]}`)
+}
+
+func (rh *RootHandler) GetBanners(c echo.Context) error {
+	banners, err := rh.BannerGetter.GetBanners(getBannerFiltersFromContext(c))
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return c.JSON(200, echo.Map{"banners": banners})
 }
 
 func getProductFiltersFromContext(c echo.Context) repos.ProductFilters {
@@ -67,6 +77,26 @@ func getProductFiltersFromContext(c echo.Context) repos.ProductFilters {
 	if offset != "" {
 		offsetInt, _ := strconv.Atoi(offset)
 		filters.Offset = offsetInt
+	}
+	return filters
+}
+
+func getBannerFiltersFromContext(c echo.Context) repos.BannerFilters {
+	filters := repos.BannerFilters{}
+	//banner filters are part of the query string
+	categoryIDs := c.QueryParam("category_ids")
+	if categoryIDs != "nil" {
+		// convert categoryIds string to slice of ints
+		categoryIDsSlice := strings.Split(categoryIDs, ",")
+		for _, categoryID := range categoryIDsSlice {
+			catIDInt, _ := strconv.Atoi(categoryID)
+			filters.CategoryIDs = append(filters.CategoryIDs, catIDInt)
+		}
+	}
+	limit := c.QueryParam("limit")
+	if limit != "" {
+		limitInt, _ := strconv.Atoi(limit)
+		filters.Limit = limitInt
 	}
 	return filters
 }

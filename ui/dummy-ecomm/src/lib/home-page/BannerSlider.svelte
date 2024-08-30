@@ -2,38 +2,27 @@
 	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
 	import '@splidejs/svelte-splide/css';
 	import { onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
 	export let categories = [];
-	let banners = [];
+	let banners = null;
 	onMount(async () => {
 		if (categories.length > 0) {
 			const response = await fetch(
-				`http://localhost:1323/banners?categories=${categories.join(',')}`
+				`http://localhost:1323/banners?category_ids=${categories.join(',')}`
 			);
 			banners = await response.json();
+			console.log(banners);
 		}
 	});
 </script>
 
-{#if banners.length > 0}
+{#if banners && banners.banners && banners.banners.length > 0}
 	<Splide aria-label="My Favorite Images">
-		{#each banners as banner}
+		{#each banners.banners as banner}
 			<SplideSlide>
-				<img src={banner.url} alt="" />
+				<img src={'http://localhost:1323/static/images/' + banner.url} alt="" />
 			</SplideSlide>
 		{/each}
 	</Splide>
 {:else}
 	<p>No banners found</p>
 {/if}
-
-<style>
-	.splide {
-		width: 100%;
-		height: 100%;
-	}
-	.splide__slide img {
-		width: 100%;
-		height: auto;
-	}
-</style>
