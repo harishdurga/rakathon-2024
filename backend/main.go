@@ -30,6 +30,7 @@ func main() {
 	//init root handler
 	rootHandler := handlers.NewRootHandler(productGetter)
 	e := echo.New()
+	e.Static("/static", "assets")
 	e.GET("/products", rootHandler.GetProducts)
 	e.Logger.Fatal(e.Start(":1323"))
 }
