@@ -42,7 +42,7 @@ func (rh *RootHandler) HomePageLayout(c echo.Context) error {
                 "category_id": 1,
                 "limit": 5,
                 "sort": "price_asc",
-                "max_price": 8000
+                "min_price": 15000
             },
             "display_title": "Electronics you need"
         },
@@ -52,7 +52,7 @@ func (rh *RootHandler) HomePageLayout(c echo.Context) error {
                 "category_id": 2,
                 "limit": 5,
                 "sort": "price_asc",
-                "max_price": 8000
+                "min_price": 15000
             },
             "display_title": "Fashion you love"
         }
