@@ -33,19 +33,21 @@ This component is used to display the best products from each category.
 {#if products}
 	<div class="space-y-8">
 		<div class="p-8">
-			<h2 class="text-2xl font-bold mb-4 text-gray-900">{displayName}</h2>
+			<h2 class="text-2xl font-bold mb-4 text-gray-900 category-products-title">{displayName}</h2>
 			<div class="flex space-x-4 overflow-x-auto">
 				{#each products as product}
-					<div class="min-w-[200px] bg-white p-4 rounded-lg shadow-sm flex-shrink-0 border-2">
+					<div
+						class="min-w-[200px] bg-white p-4 rounded-lg shadow-sm flex-shrink-0 border-2 product-card"
+					>
 						<img
 							src={'http://localhost:1323/static/images/' + product.thumbnail}
 							alt=""
 							class="w-full h-48 object-cover"
 						/>
-						<h3 class="text-lg font-semibold mt-2 text-gray-900">
-							<a href={'/product/' + product.id}>{product.name}</a>
+						<h3 class="text-lg font-semibold mt-2">
+							<a class="product-card-title" href={'/product/' + product.id}>{product.name}</a>
 						</h3>
-						<p class="text-gray-500 mt-1">₹{product.price}</p>
+						<p class="product-card-price mt-1">₹{product.price}</p>
 					</div>
 				{/each}
 			</div>

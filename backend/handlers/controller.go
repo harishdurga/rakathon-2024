@@ -28,7 +28,37 @@ func (rh *RootHandler) GetProducts(c echo.Context) error {
 }
 
 func (rh *RootHandler) HomePageLayout(c echo.Context) error {
-	return c.String(200, `{"layout":[{"type":"main-banner-slider","filters":{"categories":"2,4"}},{"type":"category-products","filters":{"category_id":2,"limit":5,"sort":"price_asc","keyword":"dhoti","max_price":2000},"display_title":"Clothing that make feel you special"},{"type":"category-products","filters":{"category_id":4,"limit":5,"sort":"price_asc","max_price":2000},"display_title":"Books that you can immerse yourself in"}]}`)
+	return c.String(200, `{
+    "layout": [
+        {
+            "type": "main-banner-slider",
+            "filters": {
+                "categories": "1,2"
+            }
+        },
+        {
+            "type": "category-products",
+            "filters": {
+                "category_id": 1,
+                "limit": 5,
+                "sort": "price_asc",
+                "max_price": 8000
+            },
+            "display_title": "Electronics you need"
+        },
+        {
+            "type": "category-products",
+            "filters": {
+                "category_id": 2,
+                "limit": 5,
+                "sort": "price_asc",
+                "max_price": 8000
+            },
+            "display_title": "Fashion you love"
+        }
+    ]
+}
+`)
 }
 
 func (rh *RootHandler) GetBanners(c echo.Context) error {

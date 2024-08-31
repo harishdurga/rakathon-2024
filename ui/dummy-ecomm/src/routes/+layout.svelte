@@ -15,19 +15,19 @@
 		<!-- App Bar -->
 		<AppBar background="nav-bar">
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase"> <a href="/">Adapt Ecomm</a></strong>
+				<strong class="text-xl uppercase"> <a href="/" class="logo-text">Adapt Ecomm</a></strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<a class="btn btn-sm variant-ghost-surface" href="/login"> Login </a>
-				<a class="btn btn-sm variant-ghost-surface" href="#"> Signup </a>
+				<a class="btn btn-sm nav-link" href="/login"> Login </a>
+				<a class="btn btn-sm nav-link" href="#"> Signup </a>
 			</svelte:fragment>
 			<svelte:fragment slot="default">
 				<nav class="categories ml-6">
-					<a class="category-link" href="/electronics">Electronics</a>
-					<a class="category-link" href="/fashion">Fashion</a>
-					<a class="category-link" href="/home-appliances">Home Appliances</a>
-					<a class="category-link" href="/books">Books</a>
-					<a class="category-link" href="/toys">Toys</a>
+					<a class="category-link nav-link" href="/electronics">Electronics</a>
+					<a class="category-link nav-link" href="/fashion">Fashion</a>
+					<a class="category-link nav-link" href="/home-appliances">Home Appliances</a>
+					<a class="category-link nav-link" href="/books">Books</a>
+					<a class="category-link nav-link" href="/toys">Toys</a>
 				</nav>
 			</svelte:fragment>
 		</AppBar>
@@ -36,7 +36,7 @@
 	<slot />
 	<!-- Footer -->
 	<svelte:fragment slot="pageFooter">
-		<footer class="bg-gray-900 text-white text-center py-4">
+		<footer class="text-center py-4 page-footer">
 			&copy; 2021 Adapt Ecomm. All rights reserved.
 		</footer>
 	</svelte:fragment>
